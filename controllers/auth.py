@@ -1,8 +1,12 @@
-# import the Flask instances
-from flask import Blueprint, render_template, request, redirect, url_for
+# ------------------------ IMPORTS ----------------------------- #
+# libraries
+from flask import Blueprint, render_template, request, redirect, url_for, make_response, session
 
+# locals
 from .routes import routes
+from database import login_required
 
+# ------------------------ INITIALIZATION ----------------------------- #
 # Create the blueprint
 auth_bp = Blueprint(routes["auth"]["login"], __name__)
 
@@ -18,5 +22,13 @@ def login():
         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
             error = { 'login': 'Invalid Credentials. Please try again.'}
         else:
-            return redirect(url_for('home'))
+            session['username'] = request.form['username']
+            session['password'] = request.form['password']
+            return redirect('/auth/example')
     return render_template('login.html', error=error)
+
+# example authed app
+@auth_bp.route('/example')
+@login_required
+def auth_example(current_user):
+    return 'Congrats you are authenticated!'

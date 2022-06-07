@@ -1,26 +1,39 @@
-# import the Flask class from the flask module
+# ------------------------ IMPORTS ----------------------------- #
+# Libraries
 from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
 
-# import routes
+# Locals
+from database import db, create_tables
 from controllers.routes import routes
-
-# test to try to separate controllers from app.py
 from controllers.auth import auth_bp
 
-# create the application object
-app = Flask(__name__)
+# ------------------------ INITIALIZATION ----------------------------- #
+def create_app():
+    app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app.config['SECRET_KEY'] = 'super-secret'
+
+    register_extensions(app)
+    register_routes(app)
+    register_blueprints(app)
+    return app
+
+def register_extensions(app: Flask):
+    db.init_app(app)
+    app.before_first_request(create_tables)
+
+    return None
 
 # ------------------------ ROUTES && BLUEPRINTS ----------------------------- #
-# Homepage
-@app.route('/')
-def home():
-    # Variables that the template will use to render
-    data = { 'login_route': '/auth' + routes["auth"]["login"] }
-    return render_template('home.html', data=data)
+def register_routes(app: Flask):
+    # Homepage
+    @app.route('/')
+    def home():
+        # Variables that the template will use to render
+        data = { 'login_route': '/auth' + routes["auth"]["login"] }
+        return render_template('home.html', data=data)
 
-# Auth Module
-app.register_blueprint(auth_bp, url_prefix='/auth')
-
-# start the server with the 'run()' method
-if __name__ == '__main__':
-    app.run(debug=True)
+def register_blueprints(app: Flask):
+    # Auth Module
+    app.register_blueprint(auth_bp, url_prefix='/auth')
