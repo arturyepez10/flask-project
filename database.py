@@ -1,6 +1,6 @@
 # ------------------------ IMPORTS ----------------------------- #
 # libraries
-from flask import request, make_response, redirect, session
+from flask import session, abort
 from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import database_exists
@@ -44,10 +44,10 @@ def login_required(f):
         #     return redirect('/', 401)
 
         user = None
-        if 'username' and 'password' not in session:
-            return redirect('/', 401)
+        if 'current_user' not in session or session['current_user'] is None:
+            abort(401, 'User unauthorized')
         else:
-            user = { 'username': session['username'], 'password': session['password'] }
+            user = session['current_user']
 
         return f(current_user=user, *args, **kwargs)
     return decorator
