@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 # Locals
 from database import db, create_tables
 from controllers.auth import auth_bp
+from controllers.admin import admin_bp
 
 # ------------------------ INITIALIZATION ----------------------------- #
 def create_app():
@@ -35,6 +36,9 @@ def register_routes(app: Flask):
 def register_blueprints(app: Flask):
     # Auth Module
     app.register_blueprint(auth_bp, url_prefix='/auth')
+
+    # Admin Module
+    app.register_blueprint(admin_bp, url_prefix='/admin')
     
 def register_errors_handlers(app: Flask):
     # Custom actions when a 401 is detected in Flask

@@ -7,4 +7,7 @@ routes = {
     "register": '/register',
     "logout": '/logout'
   },
+  "admin": {
+    "users": "/users",
+  }
 }
