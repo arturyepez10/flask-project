@@ -54,24 +54,16 @@
               </div>
               <div class="form-group col-2">
                 <!-- <label for="user-role-label">Role</label> -->
-                <select id="user-role-label" class="form-control" value="{{ user.role }}">
+                <select id="user-role-label" class="form-control" name="role" value="{{ user.role }}">
                   <option>Admin</option>
                   <option>Analista</option>
                   <option>Comprador</option>
                 </select>
               </div>
               <div class="form-group col-1 mt-auto">
-                <button type="submit" class="btn btn-outline-primary">Edit</button>
+                <button type="submit" id="{{ user.id }}" name="user-id" value="{{ user.id }}" class="btn btn-outline-primary">Edit</button>
               </div>
             </div>
-            <!-- <div class="p-2">
-              <a href="/admin/users/{{ user.id }}/edit" class="btn btn-outline-primary m-2">Edit</a>
-            </div>
-            <div class="p-2">
-              <a href="/admin/users/{{ user.id }}/delete" class="btn btn-outline-danger m-2">Delete</a>
-            </div> -->
-            <!-- <p class="p-2 m-0">{{ user.role }}</p>
-            <button type="submit" id="{{ user.id }}" name="userId" value="id-{{ user.id }}">Submit</button> -->
           </form>
         {% endfor %}
       </div>

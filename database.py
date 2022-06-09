@@ -1,6 +1,6 @@
 # ------------------------ IMPORTS ----------------------------- #
 # libraries
-from flask import session, abort
+from flask import make_response, session, abort, request
 from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import database_exists
@@ -54,4 +54,20 @@ def login_required(f):
         return f(current_user=user, *args, **kwargs)
     # This is a solution for multiple wrappers in similar routes
     decorator.__name__ = f.__name__
+    return decorator
+
+# authorize decorator (only for requests)
+def authorize_required(f):
+    @wraps(f)
+    def decorator(*args, **kwargs):
+        if 'x-access-token' in request.headers:
+            [username, password] = request.headers['x-access-token'].split(' ')
+            user = User.query.filter_by(username=username, password=password).first()
+
+            if user is None:
+                return make_response('User not found.', 404)
+        else:
+            abort(401, 'User unauthorized')    
+        
+        return f(*args, **kwargs)
     return decorator
