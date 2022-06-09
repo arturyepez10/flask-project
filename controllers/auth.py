@@ -1,10 +1,10 @@
 # ------------------------ IMPORTS ----------------------------- #
 # libraries
-from flask import Blueprint, render_template, request, redirect, url_for, make_response, session
+from flask import Blueprint, Response, render_template, request, redirect, session, Response
 
 # locals
 from .routes import routes
-from database import login_required
+from database import User
 
 # ------------------------ INITIALIZATION ----------------------------- #
 # Create the blueprint
@@ -16,19 +16,30 @@ auth_bp = Blueprint("auth", __name__)
 def login():
     # Variables that the template will use to render
     error = None
+    code = 200
 
     # Handled of the post request done to this endpoint
     if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = { 'login': 'Invalid Credentials. Please try again.'}
+        if not (request.form['username'] and request.form['password']):
+            error = { 'login': 'Empty fields. Please fill in all the fields.' }
+            code = 400
         else:
-            session['current_user'] = { 'username': request.form['username'], 'password': request.form['password'] }
-            return redirect('/admin' + routes["admin"]["users"])
+            user = User.query.filter_by(username=request.form['username']).first()
+            if user is not None:
+                if user.password == request.form['password']:
+                    session['current_user'] = { 'username': request.form['username'], 'password': request.form['password'] }
+                    return redirect('/admin' + routes["admin"]["users"])
+                else:
+                    error = { 'login': 'Incorrect password.' }
+                    code = 400
+            else:
+                error = { 'login': 'User not found.' }
+                code = 404
 
     # We check if the user already has a session token
     if 'current_user' in session:
         return redirect('/admin' + routes["admin"]["users"])
-    return render_template('login.html', error=error)
+    return render_template('login.html', error=error), code
 
 # ------------------------ CONTROLLERS ----------------------------- #
 # Logout
