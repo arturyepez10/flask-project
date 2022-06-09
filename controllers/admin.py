@@ -4,7 +4,8 @@ from flask import Blueprint, render_template, request, redirect, url_for, make_r
 
 # locals
 from .routes import routes
-from database import login_required
+from app import db
+from database import User, login_required
 
 # ------------------------ INITIALIZATION ----------------------------- #
 # Create the blueprint
@@ -15,4 +16,7 @@ admin_bp = Blueprint("admin", __name__)
 @admin_bp.route(routes["admin"]["users"], methods=['GET', 'POST'])
 @login_required
 def users(current_user):
-  return render_template('users.html')
+  all_users = User.query.all()
+  print(request.form)
+
+  return render_template('users.html', all_users=all_users)

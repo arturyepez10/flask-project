@@ -3,7 +3,78 @@
 {% block title %} Admin - Users Management {% endblock %}
 
 {% block admin_content %}
-  <div class="d-flex flex-column justify-content-center align-items-center">
-    <h2>congrats you are logged in!</h2>
+  <div class="h-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="p-3 bg-white shadow p-3 mb-5 rounded">
+      <div class="mb-4">
+        <h2>List of Users:</h2>
+      </div>
+
+      <!-- HEADER -->
+      <div class="row pb-2">
+        <div class="form-group col-1">
+          <p class="m-0">ID</p>
+        </div>
+        <div class="form-group col-2">
+          <p class="m-0">Username</p>
+        </div>
+        <div class="form-group col-3">
+          <p class="m-0">First Name</p>
+        </div>
+        <div class="form-group col-3">
+          <p class="m-0">Last Name</p>
+        </div>
+        <div class="form-group col-2">
+          <p class="m-0">Role</p>
+        </div>
+        <div class="form-group col-1 mt-auto"></div>
+      </div>
+
+      <!-- CONTENT OF LIST -->
+      <div style="overflow-y: auto; overflow-x: clip;">
+        {% for user in all_users %}
+          <form action="" method="post" key="{{ user.username }}">
+            <div class="row">
+              <div class="form-group col-1">
+                <fieldset disabled>
+                  <!-- <label for="user-id-label">ID</label> -->
+                  <input id="user-id-label" name="id" value="{{ user.id }}" class="form-control" />
+                </fieldset>
+              </div>
+              <div class="form-group col-2">
+                <!-- <label for="user-username-label">Username</label> -->
+                <input id="user-username-label" name="username" value="{{ user.username }}" class="form-control" />
+              </div>
+              <div class="form-group col-3">
+                <!-- <label for="user-name-label">First Name</label> -->
+                <input id="user-name-label" name="name" value="{{ user.name }}" class="form-control" />
+              </div>
+              <div class="form-group col-3">
+                <!-- <label for="user-last-name-label">Last Name</label> -->
+                <input id="user-last-name-label" name="last_name" value="{{ user.last_name }}" class="form-control" />
+              </div>
+              <div class="form-group col-2">
+                <!-- <label for="user-role-label">Role</label> -->
+                <select id="user-role-label" class="form-control" value="{{ user.role }}">
+                  <option>Admin</option>
+                  <option>Analista</option>
+                  <option>Comprador</option>
+                </select>
+              </div>
+              <div class="form-group col-1 mt-auto">
+                <button type="submit" class="btn btn-outline-primary">Edit</button>
+              </div>
+            </div>
+            <!-- <div class="p-2">
+              <a href="/admin/users/{{ user.id }}/edit" class="btn btn-outline-primary m-2">Edit</a>
+            </div>
+            <div class="p-2">
+              <a href="/admin/users/{{ user.id }}/delete" class="btn btn-outline-danger m-2">Delete</a>
+            </div> -->
+            <!-- <p class="p-2 m-0">{{ user.role }}</p>
+            <button type="submit" id="{{ user.id }}" name="userId" value="id-{{ user.id }}">Submit</button> -->
+          </form>
+        {% endfor %}
+      </div>
+    </div>
   </div>
 {% endblock %}
