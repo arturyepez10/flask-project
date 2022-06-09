@@ -15,6 +15,4 @@ admin_bp = Blueprint("admin", __name__)
 @admin_bp.route(routes["admin"]["users"], methods=['GET', 'POST'])
 @login_required
 def users(current_user):
-  # Variables that the template will use to render
-  data = { 'logout_route': '/auth' + routes["auth"]["logout"] }
-  return render_template('users.html', data=data)
+  return render_template('users.html')

@@ -3,16 +3,24 @@
 {% block title %}Login - Flask Project{% endblock %}
 
 {% block content %}
-  <div class="container d-flex flex-column justify-content-center align-items-center">
-    <form action="" method="post">
-        <input type="text" placeholder="Username" name="username" value="{{
-            request.form.username }}">
-        <input type="password" placeholder="Password" name="password" value="{{
-        request.form.password }}">
-        <input class="btn btn-default" type="submit" value="Login">
-    </form>
-    {% if error.login %}
-        <p><strong>Error:</strong> {{ error.login }} </p>
-    {% endif %}
+  <div class="min-vh-100 d-flex flex-column justify-content-center align-items-center bg-light">
+    <div class="w-25 p-3 bg-white shadow p-3 mb-5 rounded">
+      <form action="" method="post" class="d-flex flex-column">
+        <input
+          type="text"
+          placeholder="Username"
+          name="username"
+          value="{{ request.form.username }}"
+          class="p-2 m-2"  
+        >
+        <input type="password" placeholder="Password" name="password" value="{{ request.form.password }}" class="p-2 m-2">
+        <input class="btn btn-outline-primary m-2" type="submit" value="Login">
+      </form>
+      {% if error.login %}
+        <div class="m-2">
+          <p><strong>Error:</strong> {{ error.login }}</p>
+        </div>
+      {% endif %}
+    </div>
   </div>
 {% endblock %}
