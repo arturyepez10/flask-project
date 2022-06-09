@@ -22,6 +22,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
+    name = db.Column(db.String(80), nullable=True)
+    last_name = db.Column(db.String(80), nullable=True)
     role = db.Column(db.String(20), nullable=False)
 
     def __repr__(self):
@@ -50,4 +52,6 @@ def login_required(f):
             user = session['current_user']
 
         return f(current_user=user, *args, **kwargs)
+    # This is a solution for multiple wrappers in similar routes
+    decorator.__name__ = f.__name__
     return decorator
