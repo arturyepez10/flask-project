@@ -11,6 +11,12 @@ To run project, use the following command from the source directory:
 python run.py
 ```
 
+If we want to run the tests of the project, use the following command:
+
+```
+python run.py --testing
+```
+
 ----------------
 TODO: 
 - complete the database models
@@ -22,6 +28,10 @@ TODO:
 - in /admin/users/:
     - use disabled in all users if not admin, except for the current_user for fields that are not id or role
     - create FE and BE guard
+- with the testing, see if there is concurrency problems and race conditions with server calls.
+    - if such thing happens, use `sleep()` to avoid it
+    - test if the logger is disabled
+    - set a header for tests before starting
 
 
 ----------------
