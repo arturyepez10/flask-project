@@ -38,6 +38,12 @@
 
     <!-- CONTENT FOR ADMIN PANEL -->
     <div class="p-3 bg-light" style="height: calc(100vh - 50px);">
+      <!-- ALERTS -->
+      <div class="w-50 position-absolute" style="right: 15px;">
+        {% include "admin/alert-danger.html" %}
+      </div>
+
+      <!-- CONTENT -->
       {% block admin_content %}{% endblock %}
     </div>
   </div>

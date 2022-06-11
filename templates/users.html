@@ -5,8 +5,15 @@
 {% block admin_content %}
   <div class="h-100 d-flex flex-column justify-content-center align-items-center">
     <div class="p-3 bg-white shadow p-3 mb-5 rounded">
-      <div class="mb-4">
+      <div class="mb-4 d-flex justify-content-between">
         <h2>List of Users:</h2>
+
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#add-user-modal">
+          Add User
+        </button>
+
+        <!-- MODAL -->
+        {% include "admin/users/add-user-modal.html" %}
       </div>
 
       <!-- HEADER -->
@@ -33,7 +40,7 @@
       <div style="overflow-y: auto; overflow-x: clip;">
         {% for user in all_users %}
           <form action="" method="post" key="{{ user.username }}">
-            <div class="row">
+            <div class="row my-3">
               <div class="form-group col-1">
                 <fieldset disabled>
                   <!-- <label for="user-id-label">ID</label> -->

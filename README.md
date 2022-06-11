@@ -28,6 +28,7 @@ TODO:
 - in /admin/users/:
     - use disabled in all users if not admin, except for the current_user for fields that are not id or role
     - create FE and BE guard
+    - form validation
 - with the testing, see if there is concurrency problems and race conditions with server calls.
     - if such thing happens, use `sleep()` to avoid it
     - test if the logger is disabled

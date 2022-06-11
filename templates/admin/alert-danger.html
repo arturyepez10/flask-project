@@ -1,0 +1,10 @@
+{% if error %}
+  <div class="alert alert-danger alert-dismissible show py-2 shadow" role="alert">
+    <div class="d-flex justify-content-between align-items-center">
+      <p class="m-0"><strong>ERROR:</strong> {{ error }}</p>
+      <button type="button" class="btn close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+{% endif %}

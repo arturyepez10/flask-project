@@ -1,0 +1,64 @@
+
+<div id="add-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create a User</h5>
+        <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- FORM TO CREAT USER -->
+        <form id="createUser" action="" method="post">
+          <div>
+            <div class="form-group col my-2">
+              <p><strong>Login Information</strong></p>
+            </div>
+            <div class="form-group col my-2">
+              <label for="user-username-label">Username</label>
+              <input id="user-username-label" name="username" class="form-control" />
+            </div>
+            <div class="form-group col my-2">
+              <label for="user-name-label">Password</label>
+              <input id="user-name-label" name="password" class="form-control" />
+            </div>
+
+            <hr />
+            
+            <div class="form-group col my-2">
+              <p><strong>User Information</strong></p>
+            </div>
+            <div class="row my-2">
+              <div class="form-group col-6">
+                <label for="user-name-label">First Name</label>
+                <input id="user-name-label" name="name" class="form-control" />
+              </div>
+              <div class="form-group col-6">
+                <label for="user-last-name-label">Last Name</label>
+                <input id="user-last-name-label" name="last_name" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group col my-2">
+              <label for="user-role-label">Role</label>
+              <select id="user-role-label" class="form-control" name="role">
+                <option>Admin</option>
+                <option>Analista</option>
+                <option>Comprador</option>
+              </select>
+            </div>
+          </div>
+        </form>
+        {% if error.create %}
+          <div class="m-2">
+            <p><strong>Error:</strong> {{ error.create }}</p>
+          </div>
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" form="createUser" id="create-user" name="action-type" value="create" class="btn btn-primary">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
