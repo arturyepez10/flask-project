@@ -9,5 +9,9 @@ routes = {
   },
   "admin": {
     "users": "/users",
+  },
+  "analist": {
+    "producers": "/producers",
+    "producers-types": "/producers/types",
   }
 }

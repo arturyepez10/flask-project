@@ -27,7 +27,7 @@ def login():
             user = User.query.filter_by(username=request.form['username']).first()
             if user is not None:
                 if user.password == request.form['password']:
-                    session['current_user'] = { 'username': request.form['username'], 'password': request.form['password'] }
+                    session['current_user'] = { 'username': request.form['username'], 'password': request.form['password'], 'role': user.role }
                     return redirect('/admin' + routes["admin"]["users"])
                 else:
                     error = { 'login': 'Contraseña incorrecta.' }
@@ -38,7 +38,10 @@ def login():
 
     # We check if the user already has a session token
     if 'current_user' in session:
-        return redirect('/admin' + routes["admin"]["users"])
+        if session['current_user']['role'] == 'admin':
+            return redirect('/admin' + routes["admin"]["users"])
+        elif session['current_user']['role'] == 'analista':
+            return redirect('/analist' + routes["analist"]["producers"])
     return render_template('login.html', error=error), code
 
 # ------------------------ CONTROLLERS ----------------------------- #

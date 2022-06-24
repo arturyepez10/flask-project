@@ -1,0 +1,15 @@
+{% extends "loggedContainer.html" %}
+
+{% block title %} Productor - {{ producer.id }} {% endblock %}
+
+{% block admin_content %}
+  <div class="h-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="p-3 bg-white shadow p-3 mb-5 rounded">
+      <div class="mb-4 d-flex justify-content-between">
+        <h2>Productor: {{ producer.name }} {{ producer.last_name}}</h2>
+
+        <a href="/analist/producers" class="btn btn-outline-primary" role="button">Volver</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
