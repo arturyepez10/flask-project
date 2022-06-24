@@ -31,7 +31,7 @@ def users(current_user = None):
 
       # We validate if empty fields
       if not (form['username'] and form['password']):
-        error = 'Missing username or password information when creating a user.'
+        error = 'No hay nombre de usuario o contraseña al enviar la solicitud.'
       else:
         # We confirm the username isn't already taken
         user = User.query.filter_by(username=form['username']).first() 
@@ -49,7 +49,7 @@ def users(current_user = None):
 
           return redirect('/admin' + routes["admin"]["users"])
         else:
-          error = 'ERROR: username is already taken.'
+          error = 'ERROR: nombre de usuario no dispobible.'
     else:
       # default case is editing a user
       # TODO:See what guards can i create with this

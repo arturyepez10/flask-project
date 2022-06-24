@@ -21,7 +21,7 @@ def login():
     # Handled of the post request done to this endpoint
     if request.method == 'POST':
         if not (request.form['username'] and request.form['password']):
-            error = { 'login': 'Empty fields. Please fill in all the fields.' }
+            error = { 'login': 'Campo(s) vacio(s). Por favor, llena la información.' }
             code = 400
         else:
             user = User.query.filter_by(username=request.form['username']).first()
@@ -30,10 +30,10 @@ def login():
                     session['current_user'] = { 'username': request.form['username'], 'password': request.form['password'] }
                     return redirect('/admin' + routes["admin"]["users"])
                 else:
-                    error = { 'login': 'Incorrect password.' }
+                    error = { 'login': 'Contraseña incorrecta.' }
                     code = 400
             else:
-                error = { 'login': 'User not found.' }
+                error = { 'login': 'Usuario no encontrado.' }
                 code = 404
 
     # We check if the user already has a session token
