@@ -28,7 +28,7 @@ def run_tests():
   sleep(1)
 
   # We run the tests
-  os.system('python3 tests/run.py -v')
+  os.system('python tests/run.py -v')
 
 # ------------------------ SET-UP ----------------------------- #
 # start the server with the 'run()' method
