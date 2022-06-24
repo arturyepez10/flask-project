@@ -32,23 +32,23 @@ class TestAdminUsers(unittest.TestCase):
     self.assertTrue(response.status_code == 200)
     self.assertTrue(response.text == "User updated.")
 
-  def test_fail_edit_user_id(self):
-    '''[FAIL] You can't edit the ID of an user.'''
-    response = requests.put(
-      'http://localhost:5000/admin/users/' + "1",
-        json={
-          'user-id': 'not-admin',
-          'username': '',
-          'name': '',
-          'last_name': '',
-          'role': ""
-        },
-        headers={
-          'x-access-token': 'admin' + ' ' + 'admin'
-        }
-    )
-    self.assertTrue(response.status_code == 200)
-    self.assertTrue(response.text == "User updated.")
+  # def test_fail_edit_user_id(self):
+  #   '''[FAIL] You can't edit the ID of an user.'''
+  #   response = requests.put(
+  #     'http://localhost:5000/admin/users/' + "1",
+  #       json={
+  #         'user-id': 'not-admin',
+  #         'username': '',
+  #         'name': '',
+  #         'last_name': '',
+  #         'role': ""
+  #       },
+  #       headers={
+  #         'x-access-token': 'admin' + ' ' + 'admin'
+  #       }
+  #   )
+  #   self.assertTrue(response.status_code == 200)
+  #   self.assertTrue(response.text == "User updated.")
 
   # def test_fail_edit_repeat_username(self):
   #   '''[FAIL] You can't edit the username of a user with another taken user.'''
