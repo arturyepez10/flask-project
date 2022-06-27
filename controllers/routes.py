@@ -5,6 +5,7 @@ routes = {
   "auth": {
     "login": '/login',
     "register": '/register',
+    "change": '/change-password',
     "logout": '/logout'
   },
   "admin": {

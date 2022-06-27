@@ -15,6 +15,9 @@
         >
         <input type="password" placeholder="Contraseña" name="password" value="{{ request.form.password }}" class="p-2 m-2">
         <input class="btn btn-outline-primary m-2" type="submit" value="Login">
+        <a href="/auth/change-password" class="text-center text-secondary font-weight-light" style="text-decoration: none;" role="button">
+          Cambiar contraseña
+        </a>
       </form>
       {% if error.login %}
         <div class="m-2">
