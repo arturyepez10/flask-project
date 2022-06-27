@@ -1,6 +1,6 @@
 {% extends "main.html" %}
 
-{% block title %}Login - Flask Project{% endblock %}
+{% block title %}Login - Proyecto de Flask{% endblock %}
 
 {% block content %}
   <div class="min-vh-100 d-flex flex-column justify-content-center align-items-center bg-light">
@@ -8,13 +8,16 @@
       <form action="" method="post" class="d-flex flex-column">
         <input
           type="text"
-          placeholder="Username"
+          placeholder="Nombre de Usuario"
           name="username"
           value="{{ request.form.username }}"
           class="p-2 m-2"  
         >
-        <input type="password" placeholder="Password" name="password" value="{{ request.form.password }}" class="p-2 m-2">
+        <input type="password" placeholder="Contraseña" name="password" value="{{ request.form.password }}" class="p-2 m-2">
         <input class="btn btn-outline-primary m-2" type="submit" value="Login">
+        <a href="/auth/change-password" class="text-center text-secondary font-weight-light" style="text-decoration: none;" role="button">
+          Cambiar contraseña
+        </a>
       </form>
       {% if error.login %}
         <div class="m-2">

@@ -29,6 +29,8 @@ def create_tables(testing = False):
 # ------------------------ MODELS ----------------------------- #
 # users table
 class User(db.Model):
+    __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
@@ -38,6 +40,34 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+# producers table
+class Producer(db.Model):
+    __tablename__ = 'producers'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id_type = db.Column(db.String(80), nullable=False)
+    id_number = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(80), nullable=True)
+    last_name = db.Column(db.String(80), nullable=True)
+    local_phone = db.Column(db.String(80), nullable=True)
+    mobile_phone = db.Column(db.String(80), nullable=True)
+    producer_type_id = db.Column(db.Integer, db.ForeignKey('producer_types.id'), nullable=False)
+    producer_type = db.relationship('ProducerType', backref='producers')
+    address1 = db.Column(db.String(80), nullable=True)
+    address2 = db.Column(db.String(80), nullable=True)
+
+    def __repr__(self):
+        return '<Producer %r>' % (self.name + ' ' + self.last_name)
+
+class ProducerType(db.Model):
+    __tablename__ = 'producer_types'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(80), nullable=False)
+
+    def __repr__(self):
+        return '<Producer Type %r>' % self.name
 
 # ------------------------ DECORATORS ----------------------------- #
 # login decorator
@@ -80,4 +110,17 @@ def authorize_required(f):
             abort(401, 'User unauthorized')    
         
         return f(*args, **kwargs)
+    return decorator
+
+# admin users decorator
+def admin_required(f):
+    @wraps(f)
+    def decorator(*args, **kwargs):
+        if 'current_user' in session and session['current_user'] is not None:
+            if session['current_user']['role'] == 'Admin' or session['current_user']['role'] == 'admin':
+                return f(*args, **kwargs)
+            else:
+                abort(401, 'User unauthorized')
+        else:
+            abort(401, 'User unauthorized')
     return decorator
