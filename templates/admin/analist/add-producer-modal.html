@@ -17,7 +17,7 @@
             <div class="row my-2">
               <div class="form-group col-2">
                 <label for="producer-id-type-label">Tipo</label>
-                <select id="producer-id-type-label" class="form-control" name="id_type">
+                <select id="producer-id-type-label" class="form-select" name="id_type">
                   <option>V</option>
                   <option>E</option>
                   <option>J</option>
@@ -43,7 +43,7 @@
               <p><strong>Tipo de Productor</strong></p>
             </div>
             <div class="form-group col">
-              <select id="producer-type-label" class="form-control" name="producer_type">
+              <select id="producer-type-label" class="form-select" name="producer_type">
                 {% for type in producer_types %}
                   <option key="{{ type.name }}">{{ type.name }}</option>
                 {% endfor %}
