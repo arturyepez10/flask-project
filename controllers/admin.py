@@ -7,7 +7,7 @@ import json
 # locals
 from .routes import routes
 from app import db
-from database import User, authorize_required, login_required
+from database import User, authorize_required, login_required, admin_required
 
 # ------------------------ INITIALIZATION ----------------------------- #
 # Create the blueprint
@@ -17,12 +17,21 @@ admin_bp = Blueprint("admin", __name__)
 # Users
 @admin_bp.route(routes["admin"]["users"], methods=['GET', 'POST'])
 @login_required
+@admin_required
 def users(current_user = None):
   # Variables that the template will use to render
   error = None
 
   # We obtain all available users to render them in the list
   all_users = User.query.all()
+
+  # Search bar options
+  search_bar = {
+    "enabled": True,
+    "options": ["Usuario", "Rol"],
+    "selected": "Usuario",
+    "value": ""
+  }
 
   if request.method == 'POST':
     # See what action we want to achieve
@@ -31,7 +40,7 @@ def users(current_user = None):
 
       # We validate if empty fields
       if not (form['username'] and form['password']):
-        error = 'Missing username or password information when creating a user.'
+        error = 'No hay nombre de usuario o contraseña al enviar la solicitud.'
       else:
         # We confirm the username isn't already taken
         user = User.query.filter_by(username=form['username']).first() 
@@ -49,7 +58,21 @@ def users(current_user = None):
 
           return redirect('/admin' + routes["admin"]["users"])
         else:
-          error = 'ERROR: username is already taken.'
+          error = 'ERROR: nombre de usuario no dispobible.'
+
+    # We see the case for the search bar functionality
+    elif 'action-type' in request.form and request.form['action-type'] == 'search':
+      # Search values
+      search_bar['value'] = request.form['search_value']
+
+      # Search bar for possible cases
+      if request.form['search_option'] == 'Usuario':
+        search_bar['selected'] = 'Usuario'
+        all_users = User.query.filter(User.username.like('%' + request.form['search_value'] + '%')).all()
+      elif request.form['search_option'] == 'Rol':
+        search_bar['selected'] = 'Rol'
+        all_users = User.query.filter(User.role.like('%' + request.form['search_value'] + '%')).all()
+
     else:
       # default case is editing a user
       # TODO:See what guards can i create with this
@@ -67,7 +90,7 @@ def users(current_user = None):
       )
       return redirect('/admin' + routes["admin"]["users"])
 
-  return render_template('users.html', all_users=all_users, error=error)
+  return render_template('users.html', all_users=all_users, error=error, search_bar=search_bar)
 
 
 # ------------------------ CONTROLLERS ----------------------------- #

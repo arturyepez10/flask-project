@@ -1,0 +1,85 @@
+<div id="add-producer-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Crear Productor</h5>
+        <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- FORM TO CREATE PRODUCER -->
+        <form id="createProducer" action="" method="post">
+          <div>
+            <div class="form-group col my-2">
+              <p><strong>Información de Identificación</strong></p>
+            </div>
+            <div class="row my-2">
+              <div class="form-group col-2">
+                <label for="producer-id-type-label">Tipo</label>
+                <select id="producer-id-type-label" class="form-select" name="id_type">
+                  <option>V</option>
+                  <option>E</option>
+                  <option>J</option>
+                </select>
+              </div>
+              <div class="form-group col">
+                <label for="producer-id-number-label">Numero</label>
+                <input id="producer-id-number-label" name="id_number" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group col">
+              <label for="producer-name-label">Nombre(s)</label>
+              <input id="producer-name-label" name="name" class="form-control" />
+            </div>
+            <div class="form-group col my-2">
+              <label for="producer-last-name-label">Apellido(s)</label>
+              <input id="producer-last-name-label" name="last_name" class="form-control" />
+            </div>
+            
+            <hr />
+            
+            <div class="form-group col my-2">
+              <p><strong>Tipo de Productor</strong></p>
+            </div>
+            <div class="form-group col">
+              <select id="producer-type-label" class="form-select" name="producer_type">
+                {% for type in producer_types %}
+                  <option key="{{ type.name }}">{{ type.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <hr />
+            
+            <div class="form-group col my-2">
+              <p><strong>Información de Contacto</strong></p>
+            </div>
+            <div class="row my-2">
+              <div class="form-group col-6">
+                <label for="producer-local-label">Tlf. Local</label>
+                <input id="producer-local-label" name="local_phone" class="form-control" />
+              </div>
+              <div class="form-group col-6">
+                <label for="producer-mobile-label">Tlf. Movil</label>
+                <input id="producer-mobile-label" name="mobile_phone" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group col my-2">
+              <label for="producer-address-label">Direccion 1</label>
+              <input id="producer-address-label" name="address1" class="form-control" />
+            </div>
+            <div class="form-group col my-2">
+              <label for="producer-address2-label">Direccion 2</label>
+              <input id="producer-address2-label" name="address2" class="form-control" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="submit" form="createProducer" id="create-producer" name="action-type" value="create" class="btn btn-primary">Crear</button>
+      </div>
+    </div>
+  </div>
+</div>

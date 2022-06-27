@@ -1,0 +1,13 @@
+{% if search_bar and search_bar.enabled %}
+  <form id="searchBar" action="" method="post">
+    <div class="input-group">
+      <select id="search-bar-label" class="form-select" name="search_option">
+        {% for option in search_bar.options %}
+          <option key="{{ option }}" {% if search_bar.selected==option %} selected {% endif %}>{{ option }}</option>
+        {% endfor %}
+      </select>
+      <input type="search" class="form-control w-25" placeholder="Buscar" name="search_value" value="{{ search_bar.value }}" />
+      <button type="submit" name="action-type" value="search" class="btn btn-primary">buscar</button>
+    </div>
+  </form>
+{% endif %}

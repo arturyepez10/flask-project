@@ -5,9 +5,14 @@ routes = {
   "auth": {
     "login": '/login',
     "register": '/register',
+    "change": '/change-password',
     "logout": '/logout'
   },
   "admin": {
     "users": "/users",
+  },
+  "analist": {
+    "producers": "/producers",
+    "producers-types": "/producers/types",
   }
 }

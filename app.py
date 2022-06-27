@@ -6,6 +6,7 @@ from flask import Flask, redirect
 from database import db, create_tables
 from controllers.auth import auth_bp
 from controllers.admin import admin_bp
+from controllers.analist import analist_bp
 
 # ------------------------ INITIALIZATION ----------------------------- #
 def create_app(type = 'dev'):
@@ -45,10 +46,18 @@ def register_blueprints(app: Flask):
 
   # Admin Module
   app.register_blueprint(admin_bp, url_prefix='/admin')
+
+  # Analist Module
+  app.register_blueprint(analist_bp, url_prefix='/analist')
   
 def register_errors_handlers(app: Flask):
   # Custom actions when a 401 is detected in Flask
   @app.errorhandler(401)
   def custom_401(error):
+    print(error)
+    return redirect('/')
+
+  @app.errorhandler(404)
+  def custom_404(error):
     print(error)
     return redirect('/')

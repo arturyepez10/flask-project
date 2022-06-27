@@ -1,0 +1,63 @@
+{% extends "loggedContainer.html" %}
+
+{% block title %} Analista - Lista de Productores {% endblock %}
+
+{% block admin_content %}
+  <div class="h-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="p-3 bg-white shadow p-3 mb-5 rounded" style="min-width: 50%;">
+      <div class="mb-4 d-flex justify-content-between">
+        <h2>Lista de Productores</h2>
+
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#add-producer-modal">
+          Agregar Productor
+        </button>
+
+        <!-- MODAL -->
+        {% include "admin/analist/add-producer-modal.html" %}
+      </div>
+
+      <!-- HEADER -->
+      <div class="row pb-2">
+        <div class="form-group col-2">
+          <p class="m-0">Cedula</p>
+        </div>
+        <div class="form-group col-2">
+          <p class="m-0">Nombre(s)</p>
+        </div>
+        <div class="form-group col-3">
+          <p class="m-0">Apellido(s)</p>
+        </div>
+        <div class="form-group col-2">
+          <p class="m-0">Tipo Productor</p>
+        </div>
+        <div class="form-group col-3 mt-auto"></div>
+      </div>
+
+      <!-- CONTENT OF LIST -->
+      <div style="overflow-y: auto; overflow-x: clip;">
+        {% for producer in producers %}
+          <form action="" method="post" key="{{ producer.id_number }}">
+            <div class="row my-3 align-items-center">
+              <div class="form-group col-2">
+                <p class="m-0">{{ producer.id_type }}- {{ producer.id_number }} </p>
+              </div>
+              <div class="form-group col-2">
+                <p class="m-0">{{ producer.name }}</p>
+              </div>
+              <div class="form-group col-3">
+                <p class="m-0">{{ producer.last_name }}</p>
+              </div>
+              <div class="form-group col-2">
+                <p class="m-0">{{ producer.producer_type.name }}</p>
+              </div>
+              <div class="form-group col-3 mt-auto">
+                <button type="submit" id="{{ producer.id }}" name="edit-producer" value="{{ producer.id }}" class="btn btn-outline-primary">Editar</button>
+                <button type="submit" id="{{ producer.id }}" name="delete-producer" value="{{ producer.id }}" class="btn btn-outline-danger">Eliminar</button>
+              </div>
+            </div>
+          </form>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

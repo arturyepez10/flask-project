@@ -1,0 +1,53 @@
+{% extends "loggedContainer.html" %}
+
+{% block title %} Analista - Lista de Tipos {% endblock %}
+
+{% block admin_content %}
+  <div class="h-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="p-3 bg-white shadow p-3 mb-5 rounded">
+      <div class="mb-4 d-flex justify-content-between">
+        <h2>Lista de Tipos de Productores</h2>
+
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#add-producers-types-modal">
+          Agregar Tipo
+        </button>
+
+        <!-- MODAL -->
+        {% include "admin/analist/add-producer-type-modal.html" %}
+      </div>
+
+      <!-- HEADER -->
+      <div class="row pb-2">
+        <div class="form-group col-2">
+          <p class="m-0">ID</p>
+        </div>
+        <div class="form-group col">
+          <p class="m-0">Nombre</p>
+        </div>
+      </div>
+
+      <!-- CONTENT OF LIST -->
+      <div style="overflow-y: auto; overflow-x: clip;">
+        {% for type in producer_types %}
+          <form action="" method="post" key="{{ type.id }}">
+            <div class="row my-3">
+              <div class="form-group col-2">
+                <fieldset disabled>
+                  <!-- <label for="user-id-label">ID</label> -->
+                  <input id="producer-type-id-label" name="id" value="{{ type.id }}" class="form-control" />
+                </fieldset>
+              </div>
+              <div class="form-group col">
+                <input id="producer-type-name-label" name="name" value="{{ type.name }}" class="form-control" />
+              </div>
+              <div class="form-group col-4 mt-auto">
+                <button type="submit" id="{{ type.id }}" name="edit-producer-type" value="{{ type.id }}" class="btn btn-outline-primary">Editar</button>
+                <button type="submit" id="{{ type.id }}" name="delete-producer-type" value="{{ type.id }}" class="btn btn-outline-danger">Eliminar</button>
+              </div>
+            </div>
+          </form>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
