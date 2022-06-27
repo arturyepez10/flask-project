@@ -4,12 +4,90 @@
 
 {% block admin_content %}
   <div class="h-100 d-flex flex-column justify-content-center align-items-center">
-    <div class="p-3 bg-white shadow p-3 mb-5 rounded">
+    <div class="p-3 bg-white shadow p-3 mb-5 rounded" style="min-width: 70%;">
       <div class="mb-4 d-flex justify-content-between">
         <h2>Productor: {{ producer.name }} {{ producer.last_name}}</h2>
 
         <a href="/analist/producers" class="btn btn-outline-primary" role="button">Volver</a>
       </div>
+
+      <form id="editProducer" action="" method="post">
+        <div class="d-flex w-100">
+          <div class="w-50 p-4">
+            <div class="form-group col my-2">
+              <p><strong>Información de Identificación</strong></p>
+            </div>
+            <div class="row my-2">
+              <div class="form-group col-2">
+                <label for="producer-id-type-label">Tipo</label>
+                <select id="producer-id-type-label" class="form-control" name="id_type" value="{{ producer.id_type }}">
+                  <option {% if producer.id_type=='V' %} selected {% endif %}>V</option>
+                  <option {% if producer.id_type=='E' %} selected {% endif %}>E</option>
+                  <option {% if producer.id_type=='J' %} selected {% endif %}>J</option>
+                </select>
+              </div>
+              <div class="form-group col">
+                <label for="producer-id-number-label">Numero</label>
+                <input id="producer-id-number-label" name="id_number" class="form-control" value="{{ producer.id_number }}" />
+              </div>
+            </div>
+            <div class="form-group col">
+              <label for="producer-name-label">Nombre(s)</label>
+              <input id="producer-name-label" name="name" class="form-control" value="{{ producer.name }}" />
+            </div>
+            <div class="form-group col my-2">
+              <label for="producer-last-name-label">Apellido(s)</label>
+              <input id="producer-last-name-label" name="last_name" class="form-control" value="{{ producer.last_name }}" />
+            </div>
+
+            <hr />
+
+            <div class="form-group col my-2">
+              <p><strong>Tipo de Productor</strong></p>
+            </div>
+            <div class="form-group col">
+              <select id="producer-type-label" class="form-control" name="producer_type" value="{{ producer.producer_type }}">
+                {% for type in producer_types %}
+                  <option key="{{ type.name }}" {% if producer.producer_type.name==type.name %} selected {% endif %}>{{ type.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+  
+          <div class="w-50 p-4">
+            <div class="form-group col my-2">
+              <p><strong>Información de Contacto</strong></p>
+            </div>
+            <div class="row my-2">
+              <div class="form-group col-6">
+                <label for="producer-local-label">Tlf. Local</label>
+                <input id="producer-local-label" name="local_phone" class="form-control" value="{{ producer.local_phone }}" />
+              </div>
+              <div class="form-group col-6">
+                <label for="producer-mobile-label">Tlf. Movil</label>
+                <input id="producer-mobile-label" name="mobile_phone" class="form-control" value="{{ producer.mobile_phone }}" />
+              </div>
+            </div>
+            <div class="form-group col my-2">
+              <label for="producer-address-label">Direccion 1</label>
+              <input id="producer-address-label" name="address1" class="form-control" />
+            </div>
+            <div class="form-group col my-2">
+              <label for="producer-address2-label">Direccion 2</label>
+              <input id="producer-address2-label" name="address2" class="form-control" />
+            </div>
+
+            <hr />
+
+            <div class="d-flex justify-content-center">
+              <div style="margin-right: 16px;">
+                <button type="submit" id="{{ producer.id }}" name="edit-producer" value="{{ producer.id }}" class="btn btn-outline-primary">Guardar</button>
+              </div>
+              <button type="submit" id="{{ producer.id }}" name="delete-producer" value="{{ producer.id }}" class="btn btn-outline-danger">Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 {% endblock %}

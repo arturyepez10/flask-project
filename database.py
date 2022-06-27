@@ -104,3 +104,16 @@ def authorize_required(f):
         
         return f(*args, **kwargs)
     return decorator
+
+# admin users decorator
+def admin_required(f):
+    @wraps(f)
+    def decorator(*args, **kwargs):
+        if 'current_user' in session and session['current_user'] is not None:
+            if session['current_user']['role'] == 'Admin' or session['current_user']['role'] == 'admin':
+                return f(*args, **kwargs)
+            else:
+                abort(401, 'User unauthorized')
+        else:
+            abort(401, 'User unauthorized')
+    return decorator

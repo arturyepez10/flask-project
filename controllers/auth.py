@@ -38,9 +38,9 @@ def login():
 
     # We check if the user already has a session token
     if 'current_user' in session:
-        if session['current_user']['role'] == 'admin':
+        if session['current_user']['role'] == 'Admin' or session['current_user']['role'] == 'admin':
             return redirect('/admin' + routes["admin"]["users"])
-        elif session['current_user']['role'] == 'analista':
+        elif session['current_user']['role'] == 'Analista':
             return redirect('/analist' + routes["analist"]["producers"])
     return render_template('login.html', error=error), code
 

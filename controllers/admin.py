@@ -7,7 +7,7 @@ import json
 # locals
 from .routes import routes
 from app import db
-from database import User, authorize_required, login_required
+from database import User, authorize_required, login_required, admin_required
 
 # ------------------------ INITIALIZATION ----------------------------- #
 # Create the blueprint
@@ -17,6 +17,7 @@ admin_bp = Blueprint("admin", __name__)
 # Users
 @admin_bp.route(routes["admin"]["users"], methods=['GET', 'POST'])
 @login_required
+@admin_required
 def users(current_user = None):
   # Variables that the template will use to render
   error = None

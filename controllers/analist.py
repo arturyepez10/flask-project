@@ -82,13 +82,50 @@ def producers(current_user = None):
 @analist_bp.route(routes["analist"]["producers"] + '/<int:idx>/details', methods=['GET', 'POST'])
 @login_required
 def producer_details(current_user = None, idx = None):
-  if idx is None:
-    return redirect('/analista' + routes["analist"]["producers"])
+  # Variables that the template will use to render
+  error = None
 
   # We obtain the producer to render it in the details
   producer = Producer.query.filter_by(id=idx).first()
 
-  return render_template('producer-details.html', producer=producer)
+  if idx is None or producer is None:
+    return redirect('/analist' + routes["analist"]["producers"])
+
+  # We check the request and the action to be made
+  if request.method == 'POST':
+    # We validate if empty fields
+    if not (request.form['name'] and request.form['last_name'] and request.form['id_number'] and request.form['producer_type']):
+      error = 'Falta información para enviar la solicitud.'
+    else:
+      # We make the request to edit the producer
+      response = requests.put(
+        'http://localhost:5000/analist/producers/' + str(idx),
+        json={
+          'name': request.form['name'],
+          'last_name': request.form['last_name'],
+          'id_type': request.form['id_type'],
+          'id_number': request.form['id_number'],
+          'producer_type': request.form['producer_type'],
+          'local_phone': request.form['local_phone'],
+          'mobile_phone': request.form['mobile_phone'],
+          'address1': request.form['address1'],
+          'address2': request.form['address2'],
+        },
+        headers={
+          'x-access-token': current_user['username'] + ' ' + current_user['password']
+        }
+      )
+
+      # We check what the response was
+      if response.status_code == 200:
+        return redirect('/analist' + routes["analist"]["producers"])
+      else:
+        error = response.text
+
+  # We get all producers types
+  producer_types = ProducerType.query.all()
+
+  return render_template('producer-details.html', producer=producer, producer_types=producer_types, error=error)
 
 
 # Producers type lists
@@ -179,7 +216,7 @@ def create_producer_type():
     return make_response('Producer created.', 201)
 
 # Edit Producer
-@analist_bp.route(routes["analist"]["producers"] + '/<int:idx>/edit', endpoint="edit-producer", methods=['PUT'])
+@analist_bp.route(routes["analist"]["producers"] + '/<int:idx>', endpoint="edit-producer", methods=['PUT'])
 @authorize_required
 def edit_producer_type(idx):
   # We check if the producer exists
