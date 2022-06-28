@@ -32,6 +32,33 @@ class TestAdminUsers(unittest.TestCase):
     self.assertTrue(response.status_code == 200)
     self.assertTrue(response.text == "User updated.")
 
+  def test_list_users(self):
+    '''[FAIL] You can't get the list of users in the system.'''
+    response = requests.get(
+        'http://localhost:5000/admin/users',
+        headers={
+          'x-access-token': 'admin' + ' ' + 'admin'
+        }
+      )
+    self.assertTrue(response.status_code == 200)
+
+  def test_success_edit_user(self):
+    '''[FAIL] You can edit a user in the system'''
+    response = requests.put(
+        'http://localhost:5000/admin/users/' + "1",
+        json={
+          'username': 'admin',
+          'name': 'new name',
+          'last_name': '',
+          'role': "admin"
+        },
+        headers={
+          'x-access-token': 'admin' + ' ' + 'admin'
+        }
+    )
+    self.assertTrue(response.status_code == 200)
+    self.assertTrue(response.text == "User updated.")
+
   # def test_fail_edit_user_id(self):
   #   '''[FAIL] You can't edit the ID of an user.'''
   #   response = requests.put(
