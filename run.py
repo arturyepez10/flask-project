@@ -25,7 +25,7 @@ def run_server():
 
 def run_tests():
   # We wait 10 seconds in order to server start
-  sleep(10)
+  sleep(1)
 
   # We run the tests
   os.system('python tests/run.py -v')

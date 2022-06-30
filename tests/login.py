@@ -15,10 +15,24 @@ class TestLogin(unittest.TestCase):
       )
     self.assertTrue(response.status_code == 200)
 
-  # def test_fail_login_user(self):
-  #   '''[FAIL] You can't log in with an invalid username.'''
-  #   self.assertTrue(True)
+  def test_fail_login_user(self):
+    '''[FAIL] You can't log in with an invalid username.'''
+    response = requests.post(
+        'http://localhost:5000/auth/login',
+        data={
+          'username': 'error',
+          'password': 'admin',
+        },
+      )
+    self.assertTrue(response.status_code == 404)
 
-  # def test_fail_login_password(self):
-  #   '''[FAIL] You can't log in with an invalid username.'''
-  #   self.assertTrue(True)
+  def test_fail_login_password(self):
+    '''[FAIL] You can't log in with an invalid username.'''
+    response = requests.post(
+        'http://localhost:5000/auth/login',
+        data={
+          'username': 'admin',
+          'password': 'error',
+        },
+      )
+    self.assertTrue(response.status_code == 400)

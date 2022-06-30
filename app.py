@@ -19,6 +19,7 @@ def create_app(type = 'dev'):
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
   app.config['SECRET_KEY'] = 'super-secret'
+  print(app.config['SQLALCHEMY_DATABASE_URI'])
 
   register_extensions(app, type == 'test')
   register_routes(app)
@@ -28,11 +29,8 @@ def create_app(type = 'dev'):
 
 def register_extensions(app: Flask, testing = False):
   db.init_app(app)
-  app.before_first_request(create_tables)
-
-  if testing:
-    create_tables(testing)
-
+  app.before_first_request(lambda : create_tables(testing))
+    
 # ------------------------ ROUTES, BLUEPRINTS && ERROR HANDLERS ----------------------------- #
 def register_routes(app: Flask):
   # Homepage
