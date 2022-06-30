@@ -9,8 +9,13 @@ from sqlalchemy_utils import database_exists
 db = SQLAlchemy()
 
 def create_tables(testing = False):
-    # if testing and database_exists('sqlite:///db_tests.sqlite'):
-    #     db.drop_all()
+    if testing and database_exists('sqlite:///db_tests.sqlite'):
+        db.drop_all()
+        db.create_all()
+
+        default_user = User(username='admin', password='admin', role='admin')
+        db.session.add(default_user)
+        db.session.commit()
 
     if not testing and not database_exists('sqlite:///db.sqlite'):
         db.create_all()

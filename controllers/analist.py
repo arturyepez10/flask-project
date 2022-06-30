@@ -218,7 +218,7 @@ def create_producer():
 # Edit Producer
 @analist_bp.route(routes["analist"]["producers"] + '/<int:idx>', endpoint="edit-producer", methods=['PUT'])
 @authorize_required
-def edit_producer_type(idx):
+def edit_producer(idx):
   # We check if the producer exists
   producer = Producer.query.filter_by(id=idx).first()
 
@@ -281,7 +281,7 @@ def create_producer_type():
 
   # We check the body of the response
   if 'name' not in data:
-    return make_response('No name for the producer type', 404)
+    return make_response('No name for the producer type.', 404)
   else:
     # new producer type
     producer_type = ProducerType(name=data['name'])
@@ -309,4 +309,4 @@ def delete_producer_type(idx):
     # We commit the changes to the database
     db.session.commit()
 
-    return make_response('Producer type deleted.', 200)
+    return make_response('Producer type id deleted.', 200)
