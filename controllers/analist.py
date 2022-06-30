@@ -182,12 +182,12 @@ def producers_types(current_user = None):
 # Create Producer
 @analist_bp.route(routes["analist"]["producers"] + '/create', endpoint="create-producer", methods=['POST'])
 @authorize_required
-def create_producer_type():
+def create_producer():
   # Parse the answeer from the request
   data = json.loads(request.data)
 
   # We check the body of the response
-  if not ('name' in data and 'last_name' in data and 'producer_type' in data and 'id_number' in data):
+  if not ('name' in data and 'last_name' in data and 'producer_type' in data and 'id_type' in data and 'id_number' in data):
     return make_response('Not enough information to create a producer.', 400)
   else:
     # We find the producer type if it exists
@@ -295,7 +295,7 @@ def create_producer_type():
 # Delete Producer Type
 @analist_bp.route(routes["analist"]["producers-types"] + '/<int:idx>', endpoint="delete-producer-type", methods=['DELETE'])
 @authorize_required
-def create_producer_type(idx):
+def delete_producer_type(idx):
   # We obtain the producer type to delete
   producer_type = ProducerType.query.filter_by(id=idx).first()
 
