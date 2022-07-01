@@ -75,7 +75,6 @@ def producers(current_user = None):
         all_producers = Producer.query.all()
       else:
         error = response.text
-  
   return render_template('producers.html', producers=all_producers, producer_types=all_producers_types, error=error)
 
 # Details of a producer
@@ -192,9 +191,8 @@ def create_producer():
   else:
     # We find the producer type if it exists
     producer_type = ProducerType.query.filter_by(name=data['producer_type']).first()
-
     if producer_type is None:
-      return make_response('Producer type not found.', 404)
+      return make_response('Not enough information to create a producer.', 404)
 
     # New producer
     producer = Producer(
@@ -221,7 +219,6 @@ def create_producer():
 def edit_producer(idx):
   # We check if the producer exists
   producer = Producer.query.filter_by(id=idx).first()
-
   if producer is None:
     return make_response('Producer not found.', 404)
   
@@ -260,6 +257,7 @@ def edit_producer(idx):
 @analist_bp.route(routes["analist"]["producers"] + '/<int:idx>', endpoint="delete-producer", methods=['DELETE'])
 @authorize_required
 def delete_producer(idx):
+  all_producers = Producer.query.all()
   # We check if the producer exists
   producer = Producer.query.filter_by(id=idx).first()
 

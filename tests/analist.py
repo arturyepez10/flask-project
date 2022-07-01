@@ -103,22 +103,206 @@ class TestAnalistUsers(unittest.TestCase):
     self.assertTrue(response.text == "User updated.")
 
   def test_success_create_producer(self):
-    '''WIP [SUCCESS] You can create a producer type in the system'''
-    response = requests.post(
-      'http://localhost:5000/analist/producers/create',
+    '''[SUCCESS] You can create a producer in the system'''
+    create_producer_type_response = requests.post(
+      'http://localhost:5000/analist/producers/types/create',
       json={
-        'name': 'producer name',
-        'last_name': 'producer last name',
-        'producer_type': 'unique producer type',
-        'id_type': '1',
-        'id_number': 1 
+        'name': 'unique producer type',
       },
       headers={
         'x-access-token': 'admin' + ' ' + 'admin'
       }
     )
-    print('\n------\n')
-    print(response.status_code)
+    self.assertTrue(create_producer_type_response.status_code == 201)
+    response = requests.post(
+      'http://localhost:5000/analist/producers/create',
+      json={
+        'id_type': 'V',
+        'id_number': 1234565,
+        'name': 'producer name',
+        'last_name': 'producer last name',
+        'producer_type': 'unique producer type',
+        'local_phone': '12345',
+        'mobile_phone': '12345',
+        'address1': 'asfasfasf',
+        'address2': 'asfasfaf'
+      },
+      headers={
+        'x-access-token': 'admin' + ' ' + 'admin'
+      }
+    )
     self.assertTrue(response.status_code == 201)
-    self.assertTrue(response.text == "Producer type created.")
+    self.assertTrue(response.text == "Producer created.")
   
+  def test_failure_create_producer_v1(self):
+    '''[FAIL] You can create a producer without name, last_name, producer_type, id_type or id_number in the system'''
+    response = requests.post(
+      'http://localhost:5000/analist/producers/create',
+      json={
+        'local_phone': '12345',
+        'mobile_phone': '12345',
+        'address1': 'asfasfasf',
+        'address2': 'asfasfaf'
+      },
+      headers={
+        'x-access-token': 'admin' + ' ' + 'admin'
+      }
+    )
+    self.assertTrue(response.status_code == 400)
+    self.assertTrue(response.text == "Not enough information to create a producer.")
+
+  def test_failure_create_producer_v2(self):
+    '''[FAIL] You can create a producer with a invalid producer type in the system'''
+    create_producer_type_response = requests.post(
+      'http://localhost:5000/analist/producers/types/create',
+      json={
+        'name': 'unique producer type',
+      },
+      headers={
+        'x-access-token': 'admin' + ' ' + 'admin'
+      }
+    )
+    self.assertTrue(create_producer_type_response.status_code == 201)
+    response = requests.post(
+      'http://localhost:5000/analist/producers/create',
+      json={
+        'id_type': 'V',
+        'id_number': 1234565,
+        'name': 'producer name',
+        'last_name': 'producer last name',
+        'producer_type': 'invalid producer type',
+        'local_phone': '12345',
+        'mobile_phone': '12345',
+        'address1': 'asfasfasf',
+        'address2': 'asfasfaf'
+      },
+      headers={
+        'x-access-token': 'admin' + ' ' + 'admin'
+      }
+    )
+    self.assertTrue(response.status_code == 404)
+    self.assertTrue(response.text == "Not enough information to create a producer.")
+
+  def test_success_delete_producer(self):
+    '''[SUCCESS] You can delete a producer in the system'''
+    create_producer_type_response = requests.post(
+      'http://localhost:5000/analist/producers/types/create',
+      json={
+        'name': 'unique producer type 2',
+      },
+      headers={
+        'x-access-token': 'admin' + ' ' + 'admin'
+      }
+    )
+    self.assertTrue(create_producer_type_response.status_code == 201)
+    create_producer_response = requests.post(
+      'http://localhost:5000/analist/producers/create',
+      json={
+        'id_type': 'V',
+        'id_number': 1234565,
+        'name': 'producer name',
+        'last_name': 'producer last name',
+        'producer_type': 'unique producer type 2',
+        'local_phone': '12345',
+        'mobile_phone': '12345',
+        'address1': 'asfasfasf',
+        'address2': 'asfasfaf'
+      },
+      headers={
+        'x-access-token': 'admin' + ' ' + 'admin'
+      }
+    )
+    self.assertTrue(create_producer_response.status_code == 201)
+    self.assertTrue(create_producer_response.text == "Producer created.")
+    delete_producer_response = requests.delete(
+      'http://localhost:5000/analist/producers/1',
+      headers={
+        'x-access-token': 'admin' + ' ' + 'admin'
+      }
+    )
+    self.assertTrue(delete_producer_response.status_code == 200)
+    self.assertTrue(delete_producer_response.text == "Producer deleted.")
+
+  def test_failure_delete_producer(self):
+    '''[FAIL] You can delete a nonexist producer in the system'''
+    delete_producer_response = requests.delete(
+      'http://localhost:5000/analist/producers/100',
+      headers={
+        'x-access-token': 'admin' + ' ' + 'admin'
+      }
+    )
+    self.assertTrue(delete_producer_response.status_code == 404)
+    self.assertTrue(delete_producer_response.text == "Producer not found.")
+
+  def test_success_edit_producer(self):
+    '''[SUCCESS] You can edit a producer in the system'''
+    create_producer_type_response = requests.post(
+      'http://localhost:5000/analist/producers/types/create',
+      json={
+        'name': 'unique producer type 3',
+      },
+      headers={
+        'x-access-token': 'admin' + ' ' + 'admin'
+      }
+    )
+    self.assertTrue(create_producer_type_response.status_code == 201)
+    create_producer_response = requests.post(
+      'http://localhost:5000/analist/producers/create',
+      json={
+        'id_type': 'V',
+        'id_number': 1234565,
+        'name': 'edit producer name',
+        'last_name': 'producer last name',
+        'producer_type': 'unique producer type 3',
+        'local_phone': '12345',
+        'mobile_phone': '12345',
+        'address1': 'asfasfasf',
+        'address2': 'asfasfaf'
+      },
+      headers={
+        'x-access-token': 'admin' + ' ' + 'admin'
+      }
+    )
+    self.assertTrue(create_producer_response.status_code == 201)
+    self.assertTrue(create_producer_response.text == "Producer created.")
+    edit_producer_response = requests.put(
+      'http://localhost:5000/analist/producers/2',
+      json={
+        'id_type': 'V',
+        'id_number': 1234565,
+        'name': 'new edit producer name',
+        'last_name': 'producer last name',
+        'producer_type': 'unique producer type 3',
+        'local_phone': '12345',
+        'mobile_phone': '12345',
+        'address1': 'asfasfasf',
+        'address2': 'asfasfaf'
+      },
+      headers={
+        'x-access-token': 'admin' + ' ' + 'admin'
+      }
+    )
+    self.assertTrue(edit_producer_response.status_code == 200)
+    self.assertTrue(edit_producer_response.text == "Producer updated.")
+
+  def test_failure_edit_producer(self):
+    '''[FAIL] You can edit a nonexist producer in the system'''
+    edit_producer_response = requests.put(
+      'http://localhost:5000/analist/producers/200',
+      json={
+        'id_type': 'V',
+        'id_number': 1234565,
+        'name': 'new edit producer name',
+        'last_name': 'producer last name',
+        'producer_type': 'unique producer type 3',
+        'local_phone': '12345',
+        'mobile_phone': '12345',
+        'address1': 'asfasfasf',
+        'address2': 'asfasfaf'
+      },
+      headers={
+        'x-access-token': 'admin' + ' ' + 'admin'
+      }
+    )
+    self.assertTrue(edit_producer_response.status_code == 404)
+    self.assertTrue(edit_producer_response.text == "Producer not found.")
