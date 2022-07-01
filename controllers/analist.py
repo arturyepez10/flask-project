@@ -192,7 +192,7 @@ def create_producer():
     # We find the producer type if it exists
     producer_type = ProducerType.query.filter_by(name=data['producer_type']).first()
     if producer_type is None:
-      return make_response('Not enough information to create a producer.', 404)
+      return make_response('Producer type not found.', 404)
 
     # New producer
     producer = Producer(

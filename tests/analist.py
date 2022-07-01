@@ -181,7 +181,7 @@ class TestAnalistUsers(unittest.TestCase):
       }
     )
     self.assertTrue(response.status_code == 404)
-    self.assertTrue(response.text == "Not enough information to create a producer.")
+    self.assertTrue(response.text == "Producer type not found.")
 
   def test_success_delete_producer(self):
     '''[SUCCESS] You can delete a producer in the system'''
