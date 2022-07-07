@@ -1,0 +1,96 @@
+{% extends "loggedContainer.html" %}
+
+{% block title %} Cosecha - {{ harvest.id }} {% endblock %}
+
+{% block admin_content %}
+  <div class="h-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="p-3 bg-white shadow p-3 mb-5 rounded" style="min-width: 70%;">
+      <div class="mb-4 d-flex justify-content-between">
+        <h2>Cosecha: {{ harvest.description }}</h2>
+
+        <a href="/analyst/harvests" class="btn btn-outline-danger" role="button">Volver</a>
+      </div>
+
+      <form id="editHarvest" action="" method="post">
+        <div class="d-flex w-100">
+          <div class="w-50 p-4">
+            <div class="form-group col my-2">
+              <p><strong>Información de Identificación</strong></p>
+            </div>
+            <div class="form-group col">
+              <label for="harvest-description-label">Descripción</label>
+              <input id="harvest-description-label" name="description" class="form-control" value="{{ harvest.description }}" />
+            </div>
+
+            <div class="row my-2">
+              <div class="form-group col">
+                <label for="harvest-beginning-label">Inicio</label>
+                <input id="harvest-beginning-label" name="beginning" type="date" class="form-control" value="{{ harvest.beginning }}" />
+              </div>
+              <div class="form-group col">
+                <label for="producer-last-name-label">Cierre</label>
+                <input id="producer-last-name-label" name="closure" type="date" class="form-control" value="{{ harvest.closure }}" />
+              </div>
+            </div>            
+
+            <hr />
+
+            <div class="form-group col my-2">
+              <p><strong>Compras</strong></p>
+            </div>
+
+            <div class="form-group col">
+              <p class="m-0">{% if not harvest.purchase %} <strong>No existe compra asociada.</strong> {% else %} Posee compra asociada. {% endif %}</p>
+            </div>
+
+            <div class="d-flex justify-content-center" style="margin-top: 16px;">
+              <div style="margin-right: 16px;">
+                <button type="submit" id="{{ harvest.id }}" name="list-purchases" value="{{ harvest.id }}" class="btn btn-outline-info">Lista</button>
+              </div>
+              <button type="submit" id="{{ harvest.id }}" name="generate-purchase" value="{{ harvest.id }}" class="btn btn-outline-success">Generar</button>
+            </div>
+
+          </div>
+  
+          <div class="w-50 p-4">
+            <div class="form-group col my-2">
+              <p><strong>Acciones posibles</strong></p>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <div style="margin-right: 16px;">
+                <button
+                  type="submit"
+                  name="enable-harvest"
+                  alue="{{ harvest.id }}"
+                  class="btn btn-outline-success"
+                  {% if harvest.state=='active' %} disabled {% endif %}
+                >
+                  Habilitar
+                </button>
+              </div>
+              <button
+                type="submit"
+                name="disable-harvest"
+                value="{{ harvest.id }}"
+                class="btn btn-outline-warning"
+                {% if harvest.state=='inactive' %} disabled {% endif %}
+              >
+                Deshabilitar
+              </button>
+            </div>
+
+            <hr />
+
+            <div class="d-flex justify-content-center">
+              <div style="margin-right: 16px;">
+                <button type="submit" id="{{ harvest.id }}" name="edit-harvest" value="{{ harvest.id }}" class="btn btn-outline-primary">Guardar</button>
+              </div>
+              <button type="submit" id="{{ harvest.id }}" name="delete-harvest" value="{{ harvest.id }}" class="btn btn-outline-danger">Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
