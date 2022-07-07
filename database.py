@@ -75,6 +75,51 @@ class ProducerType(db.Model):
     def __repr__(self):
         return '<Producer Type %r>' % self.name
 
+class Harvest(db.Model):
+    __tablename__ = 'harvests'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    description = db.Column(db.String(80), nullable=False)
+    beginning = db.Column(db.String(40), nullable=False)
+    closure = db.Column(db.String(40), nullable=False)
+    state = db.Column(db.String(80), nullable=False)
+    purchase_id = db.Column(db.Integer, db.ForeignKey('purchases.id'), nullable=True)
+    purchase = db.relationship('Purchase', backref='harvests')
+
+    def __str__(self) -> str:
+        return '<Harvest %r>' % self.description
+
+class Purchase(db.Model):
+    __tablename__ = 'purchases'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    products_list = db.relationship('Product', backref='purchases')
+    item_qty = db.Column(db.Integer, nullable=False)
+    total_price = db.Column(db.Float, nullable=False)
+
+    def __repr__(self):
+        return '<Purchase %r>' % self.id
+
+class Product(db.Model):
+    __tablename__ = 'products'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(db.String(40), nullable=False)
+    id_type = db.Column(db.String(80), nullable=False)
+    id_number = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(80), nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    qty = db.Column(db.Integer, nullable=False)
+    humidity = db.Column(db.Float, nullable=False)
+    depletion = db.Column(db.Float, nullable=False)
+    total_qty = db.Column(db.Float, nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    description = db.Column(db.String(80), nullable=True)
+    purchase_id = db.Column(db.Integer, db.ForeignKey('purchases.id'), nullable=False)
+
+    def __repr__(self):
+        return '<Product %r>' % self.name
+
 # ------------------------ DECORATORS ----------------------------- #
 # login decorator
 def login_required(f):

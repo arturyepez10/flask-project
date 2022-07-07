@@ -14,5 +14,10 @@ routes = {
   "analist": {
     "producers": "/producers",
     "producers-types": "/producers/types",
+  },
+  "harvests": {
+    "portfolio": "/harvests",
+    "purchases": "/purchases",
+    "products": "/products",
   }
 }
