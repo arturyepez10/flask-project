@@ -5,16 +5,16 @@
 
 ---
 
-#### Descripción del equipo
+### Descripción del equipo
 
-##### Agile Coach
+#### Agile Coach
 - Jean Carlos Guzmán
-- 
-##### Miembos del equipo de desarollo
+
+#### Miembos del equipo de desarollo
 - Arturo Yépez
 - Pedro Samuel Fagundez
 ---
-#### Instrucciones del proyecto
+### Instrucciones del proyecto
 Antes de iniciar el proyecto, se deben instalar las dependencias, para eso correr:
 
 ```
@@ -33,7 +33,7 @@ Para correr el suit de pruebas del proyecto se debe ejecutar el siguiente comand
 python run.py --testing
 ```
 ---
-#### Alcance del proyecto
+### Alcance del proyecto
 
 El objetivo es desarrollar una herramienta de soporte al proceso de Gerencia de Proyectos Agrícolas Sostenibles. Lo cual permitirá la gestión de los siguientes módulos:
 - Administración de usuarios y sus roles.
