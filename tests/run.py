@@ -6,6 +6,7 @@ import unittest
 from login import TestLogin
 from admin import TestAdminUsers
 from analist import TestAnalistUsers
+from analyst import TestAnalystUsers
 
 # ------------------------ RUN ----------------------------- #
 if __name__ == '__main__':

@@ -21,6 +21,7 @@ class TestAnalistUsers(unittest.TestCase):
       'http://localhost:5000/analist/producers/types/create',
       json={
         'name': 'unique producer type',
+        'price': '0.0'
       },
       headers={
         'x-access-token': 'admin' + ' ' + 'admin'
@@ -35,13 +36,14 @@ class TestAnalistUsers(unittest.TestCase):
       'http://localhost:5000/analist/producers/types/create',
       json={
         'noname': '',
+        'price': '0.0'
       },
       headers={
         'x-access-token': 'admin' + ' ' + 'admin'
       }
     )
     self.assertTrue(response.status_code == 404)
-    self.assertTrue(response.text == "No name for the producer type.")
+    self.assertTrue(response.text == "No existe nombre o precio para el tipo de productor.")
 
   def test_success_delete_producer_type(self):
     '''[SUCCESS] You can delete a producer type in the system'''
@@ -49,6 +51,7 @@ class TestAnalistUsers(unittest.TestCase):
       'http://localhost:5000/analist/producers/types/create',
       json={
         'name': 'producer to delete',
+        'price': '0.0'
       },
       headers={
         'x-access-token': 'admin' + ' ' + 'admin'
@@ -108,6 +111,7 @@ class TestAnalistUsers(unittest.TestCase):
       'http://localhost:5000/analist/producers/types/create',
       json={
         'name': 'unique producer type',
+        'price': '0.0'
       },
       headers={
         'x-access-token': 'admin' + ' ' + 'admin'
@@ -157,6 +161,7 @@ class TestAnalistUsers(unittest.TestCase):
       'http://localhost:5000/analist/producers/types/create',
       json={
         'name': 'unique producer type',
+        'price': '0.0'
       },
       headers={
         'x-access-token': 'admin' + ' ' + 'admin'
@@ -189,6 +194,7 @@ class TestAnalistUsers(unittest.TestCase):
       'http://localhost:5000/analist/producers/types/create',
       json={
         'name': 'unique producer type 2',
+        'price': '0.0'
       },
       headers={
         'x-access-token': 'admin' + ' ' + 'admin'
@@ -240,6 +246,7 @@ class TestAnalistUsers(unittest.TestCase):
       'http://localhost:5000/analist/producers/types/create',
       json={
         'name': 'unique producer type 3',
+        'price': '0.0'
       },
       headers={
         'x-access-token': 'admin' + ' ' + 'admin'

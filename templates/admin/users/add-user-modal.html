@@ -13,38 +13,43 @@
         <form id="createUser" action="" method="post">
           <div>
             <div class="form-group col my-2">
-              <p><strong>Login Information</strong></p>
+              <p><strong>Información de Login</strong></p>
             </div>
             <div class="form-group col my-2">
-              <label for="user-username-label">Username</label>
+              <label for="user-username-label">Nombre de Usuario</label>
               <input id="user-username-label" name="username" class="form-control" />
             </div>
             <div class="form-group col my-2">
-              <label for="user-name-label">Password</label>
+              <label for="user-name-label">Contraseña</label>
               <input id="user-name-label" name="password" class="form-control" />
             </div>
 
             <hr />
             
             <div class="form-group col my-2">
-              <p><strong>User Information</strong></p>
+              <p><strong>Información de Usuario</strong></p>
             </div>
             <div class="row my-2">
               <div class="form-group col-6">
-                <label for="user-name-label">First Name</label>
+                <label for="user-name-label">Nombre(s)</label>
                 <input id="user-name-label" name="name" class="form-control" />
               </div>
               <div class="form-group col-6">
-                <label for="user-last-name-label">Last Name</label>
+                <label for="user-last-name-label">Apellido(s)</label>
                 <input id="user-last-name-label" name="last_name" class="form-control" />
               </div>
             </div>
             <div class="form-group col my-2">
-              <label for="user-role-label">Role</label>
+              <label for="user-role-label">Rol</label>
               <select id="user-role-label" class="form-select" name="role">
                 <option>Admin</option>
                 <option>Analista</option>
                 <option>Comprador</option>
+              </select>
+            </div>
+            <div class="form-group col my-2">
+              <label for="user-harvest-label">Cosecha</label>
+              <select id="user-harvest-label" class="form-select" name="harvest_id">
               </select>
             </div>
           </div>

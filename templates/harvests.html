@@ -1,0 +1,73 @@
+{% extends "loggedContainer.html" %}
+
+{% block title %} Analista - Lista de Compras {% endblock %}
+
+{% block admin_content %}
+  <div class="h-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="p-3 bg-white shadow p-3 mb-5 rounded" style="min-width: 60%;">
+      <div class="mb-4 d-flex justify-content-between">
+        <h2>Lista de Cosechas</h2>
+
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#add-harvest-modal">
+          Agregar Cosecha
+        </button>
+
+        <!-- MODAL -->
+        {% include "admin/analyst/add-harvest-modal.html" %}
+      </div>
+
+      <!-- HEADER -->
+      <div class="row pb-2">
+        <div class="form-group col-1">
+          <p class="m-0">ID</p>
+        </div>
+        <div class="form-group col-3">
+          <p class="m-0">Descripcion</p>
+        </div>
+        <div class="form-group col-2">
+          <p class="m-0">Inicio</p>
+        </div>
+        <div class="form-group col-2">
+          <p class="m-0">Cierre</p>
+        </div>
+        <div class="form-group col-2">
+          <p class="m-0">Habilitada</p>
+        </div>
+        <div class="form-group col-3 mt-auto"></div>
+      </div>
+
+      <!-- CONTENT OF LIST -->
+      <div style="overflow-y: auto; overflow-x: clip;">
+        {% for harvest in harvests %}
+          <form action="" method="post" key="{{ harvest.id_number }}">
+            <div class="row my-3 align-items-center">
+              <div class="form-group col-1">
+                <p class="m-0">{{ harvest.id }}</p>
+              </div>
+              <div class="form-group col-3">
+                <p class="m-0">{{ harvest.description }}</p>
+              </div>
+              <div class="form-group col-2">
+                <p class="m-0">{{ harvest.beginning }}</p>
+              </div>
+              <div class="form-group col-2">
+                <p class="m-0">{{ harvest.closure }}</p>
+              </div>
+              <div class="form-group col-1">
+                {% if harvest.state=='active' %}
+                  <p class="m-0 text-success">SI</p>
+                {% elif harvest.state=='inactive' %}
+                <p class="m-0 text-danger">NO</p>
+                {% endif %}
+              </div>
+              <div class="form-group col-3 mt-auto">
+                <button type="submit" id="{{ harvest.id }}" name="edit-harvest" value="{{ harvest.id }}" class="btn btn-outline-primary">Editar</button>
+                <button type="submit" id="{{ harvest.id }}" name="delete-harvest" value="{{ harvest.id }}" class="btn btn-outline-danger">Eliminar</button>
+              </div>
+            </div>
+          </form>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -7,7 +7,7 @@ import json
 # locals
 from .routes import routes
 from app import db
-from database import User, authorize_required, login_required, admin_required
+from database import User, Harvest, authorize_required, login_required, admin_required
 
 # ------------------------ INITIALIZATION ----------------------------- #
 # Create the blueprint
@@ -24,6 +24,7 @@ def users(current_user = None):
 
   # We obtain all available users to render them in the list
   all_users = User.query.all()
+  all_harvests = Harvest.query.all()
 
   # Search bar options
   search_bar = {
@@ -73,7 +74,8 @@ def users(current_user = None):
         search_bar['selected'] = 'Rol'
         all_users = User.query.filter(User.role.like('%' + request.form['search_value'] + '%')).all()
 
-    else:
+    # We edit the user
+    elif 'user-id' in request.form:
       # default case is editing a user
       # TODO:See what guards can i create with this
       response = requests.put(
@@ -90,7 +92,7 @@ def users(current_user = None):
       )
       return redirect('/admin' + routes["admin"]["users"])
 
-  return render_template('users.html', all_users=all_users, error=error, search_bar=search_bar)
+  return render_template('users.html', all_users=all_users, all_harvests=all_harvests, error=error, search_bar=search_bar)
 
 
 # ------------------------ CONTROLLERS ----------------------------- #
