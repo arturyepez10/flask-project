@@ -7,7 +7,7 @@ import json
 # locals
 from .routes import routes
 from app import db
-from database import User, Harvest, authorize_required, login_required, admin_required
+from database import User, Harvest, authorize_required, login_required, admin_required, Events
 
 # ------------------------ INITIALIZATION ----------------------------- #
 # Create the blueprint
@@ -19,6 +19,8 @@ admin_bp = Blueprint("admin", __name__)
 @login_required
 @admin_required
 def users(current_user = None):
+  print(Events.query.all())
+
   # Variables that the template will use to render
   error = None
 

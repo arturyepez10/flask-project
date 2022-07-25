@@ -4,6 +4,7 @@ from flask import make_response, session, abort, request
 from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import database_exists
+from datetime import datetime
 
 # ------------------------ INIT ----------------------------- #
 db = SQLAlchemy()
@@ -30,6 +31,79 @@ def create_tables(testing = False):
         default_user = User(username='admin', password='admin', role='admin')
         db.session.add(default_user)
         db.session.commit()
+
+    # We create the events catchers
+    @db.event.listens_for(User, 'after_insert')
+    def register_user_update_event(mapper, connection, target):
+        events = Events.__table__
+        connection.execute(events.insert().values(
+            date=datetime.today().strftime('%Y-%m-%d'),
+            description='User ' + target.username + ' created',
+            module="User",
+        ))
+
+    @db.event.listens_for(User, 'after_update')
+    def register_user_update_event(mapper, connection, target):
+        events = Events.__table__
+        connection.execute(events.insert().values(
+            date=datetime.today().strftime('%Y-%m-%d'),
+            description='User ' + target.username + ' updated',
+            module="User",
+        ))
+
+    @db.event.listens_for(Producer, 'after_insert')
+    def register_producer_update_event(mapper, connection, target):
+        events = Events.__table__
+        connection.execute(events.insert().values(
+            date=datetime.today().strftime('%Y-%m-%d'),
+            description='Producer ' + target.name + ' created',
+            module="Producer",
+        ))
+
+    @db.event.listens_for(Producer, 'after_update')
+    def register_producer_update_event(mapper, connection, target):
+        events = Events.__table__
+        connection.execute(events.insert().values(
+            date=datetime.today().strftime('%Y-%m-%d'),
+            description='Producer ' + target.name + ' updated',
+            module="Producer",
+        ))
+
+    @db.event.listens_for(ProducerType, 'after_insert')
+    def register_producer_type_update_event(mapper, connection, target):
+        events = Events.__table__
+        connection.execute(events.insert().values(
+            date=datetime.today().strftime('%Y-%m-%d'),
+            description='Producer Type ' + target.name + ' created',
+            module="Producer Type",
+        ))
+
+    @db.event.listens_for(ProducerType, 'after_update')
+    def register_producer_type_update_event(mapper, connection, target):
+        events = Events.__table__
+        connection.execute(events.insert().values(
+            date=datetime.today().strftime('%Y-%m-%d'),
+            description='Producer Type ' + target.name + ' updated',
+            module="Producer Type",
+        ))
+
+    @db.event.listens_for(Harvest, 'after_insert')
+    def register_harvest_event(mapper, connection, target):
+        events = Events.__table__
+        connection.execute(events.insert().values(
+            date=datetime.today().strftime('%Y-%m-%d'),
+            description='Harvest ' + target.description + ' created',
+            module="Harvest",
+        ))
+
+    @db.event.listens_for(Harvest, 'after_update')
+    def register_harvest_update_event(mapper, connection, target):
+        events = Events.__table__
+        connection.execute(events.insert().values(
+            date=datetime.today().strftime('%Y-%m-%d'),
+            description='Harvest ' + target.description + ' updated',
+            module="Harvest",
+        ))
 
 # ------------------------ MODELS ----------------------------- #
 # users table
@@ -120,6 +194,14 @@ class Product(db.Model):
 
     def __repr__(self):
         return '<Product %r>' % self.name
+
+class Events(db.Model):
+    __tablename__ = 'events'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(db.String(40), nullable=False)
+    description = db.Column(db.String(80), nullable=False)
+    module = db.Column(db.String(80), nullable=False)
 
 # ------------------------ DECORATORS ----------------------------- #
 # login decorator
