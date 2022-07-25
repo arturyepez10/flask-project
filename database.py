@@ -105,6 +105,42 @@ def create_tables(testing = False):
             module="Harvest",
         ))
 
+    @db.event.listens_for(Purchase, 'after_insert')
+    def register_purchase_event(mapper, connection, target):
+        events = Events.__table__
+        connection.execute(events.insert().values(
+            date=datetime.today().strftime('%Y-%m-%d'),
+            description='Purchase created',
+            module="Purchase",
+        ))
+
+    @db.event.listens_for(Purchase, 'after_update')
+    def register_purchase_update_event(mapper, connection, target):
+        events = Events.__table__
+        connection.execute(events.insert().values(
+            date=datetime.today().strftime('%Y-%m-%d'),
+            description='Purchase updated',
+            module="Purchase",
+        ))
+
+    @db.event.listens_for(Product, 'after_insert')
+    def register_product_event(mapper, connection, target):
+        events = Events.__table__
+        connection.execute(events.insert().values(
+            date=datetime.today().strftime('%Y-%m-%d'),
+            description='Product created',
+            module="Product",
+        ))
+
+    @db.event.listens_for(Product, 'after_update')
+    def register_product_update_event(mapper, connection, target):
+        events = Events.__table__
+        connection.execute(events.insert().values(
+            date=datetime.today().strftime('%Y-%m-%d'),
+            description='Product updated',
+            module="Product",
+        ))
+
 # ------------------------ MODELS ----------------------------- #
 # users table
 class User(db.Model):
