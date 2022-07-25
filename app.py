@@ -7,6 +7,7 @@ from database import db, create_tables
 from controllers.auth import auth_bp
 from controllers.admin import admin_bp
 from controllers.analist import analist_bp
+from controllers.harvests import harvests_bp
 
 # ------------------------ INITIALIZATION ----------------------------- #
 def create_app(type = 'dev'):
@@ -47,6 +48,7 @@ def register_blueprints(app: Flask):
 
   # Analist Module
   app.register_blueprint(analist_bp, url_prefix='/analist')
+  app.register_blueprint(harvests_bp, url_prefix='/analyst')
   
 def register_errors_handlers(app: Flask):
   # Custom actions when a 401 is detected in Flask

@@ -7,7 +7,7 @@ import json
 # locals
 from .routes import routes
 from app import db
-from database import User, Producer, ProducerType, authorize_required, login_required
+from database import Producer, ProducerType, authorize_required, login_required
 
 # ------------------------ INITIALIZATION ----------------------------- #
 # Create the blueprint
@@ -145,6 +145,7 @@ def producers_types(current_user = None):
         'http://localhost:5000/analist/producers/types/create',
         json={
           'name': request.form['name'],
+          'price': request.form['price'],
         },
         headers={
           'x-access-token': current_user['username'] + ' ' + current_user['password']
@@ -157,6 +158,27 @@ def producers_types(current_user = None):
       else:
         error = response.text
     elif 'edit-producer-type' in request.form:
+      # We validate if empty fields
+      if not (request.form['name'] and request.form['price']):
+        error = 'Falta información para enviar la solicitud.'
+      else:
+        # We make the request to edit the producer
+        response = requests.put(
+          'http://localhost:5000/analist/producers/types/' + request.form['edit-producer-type'],
+          json={
+            'name': request.form['name'],
+            'price': request.form['price'],
+          },
+          headers={
+            'x-access-token': current_user['username'] + ' ' + current_user['password']
+          }
+        )
+
+        # We check what the response was
+        if response.status_code == 200:
+          return redirect('/analist' + routes["analist"]["producers-types"])
+        else:
+          error = response.text
       pass
     elif 'delete-producer-type' in request.form:
       # We make the request to delete the producer type
@@ -257,7 +279,6 @@ def edit_producer(idx):
 @analist_bp.route(routes["analist"]["producers"] + '/<int:idx>', endpoint="delete-producer", methods=['DELETE'])
 @authorize_required
 def delete_producer(idx):
-  all_producers = Producer.query.all()
   # We check if the producer exists
   producer = Producer.query.filter_by(id=idx).first()
 
@@ -278,17 +299,40 @@ def create_producer_type():
   data = json.loads(request.data)
 
   # We check the body of the response
-  if 'name' not in data:
-    return make_response('No name for the producer type.', 404)
+  if 'name' not in data or 'price' not in data:
+    return make_response('No existe nombre o precio para el tipo de productor.', 404)
   else:
     # new producer type
-    producer_type = ProducerType(name=data['name'])
+    producer_type = ProducerType(name=data['name'], price=float(data['price']))
     
     # We commit the changes to the database
     db.session.add(producer_type)
     db.session.commit()
 
     return make_response('Producer type created.', 201)
+
+# Edit Producer Type
+@analist_bp.route(routes["analist"]["producers-types"] + '/<int:idx>', endpoint="edit-producer-type", methods=['PUT'])
+@authorize_required
+def edit_producer_type(idx: int):
+  # We check if the producer type exists
+  producer_type = ProducerType.query.filter_by(id=idx).first()
+  if producer_type is None:
+    return make_response('Producer type not found.', 404)
+  
+  # Parse the answeer from the request
+  data = json.loads(request.data)
+
+  # Update the producer type according
+  if data['name']:
+    producer_type.name = data['name']
+  if data['price']:
+    producer_type.price= data['price']
+
+  # We commit the changes to the database
+  db.session.commit()
+
+  return make_response('Producer type updated.', 200)
 
 # Delete Producer Type
 @analist_bp.route(routes["analist"]["producers-types"] + '/<int:idx>', endpoint="delete-producer-type", methods=['DELETE'])

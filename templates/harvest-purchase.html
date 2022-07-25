@@ -1,0 +1,68 @@
+{% extends "loggedContainer.html" %}
+
+{% block title %} Compra de Cosecha - {{ harvest.id }}  {% endblock %}
+
+{% block admin_content %}
+  <div class="h-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="p-3 bg-white shadow p-3 mb-5 rounded" style="min-width: 70%;">
+      <div class="mb-4 d-flex justify-content-between">
+        <h2>Orden de Compras | Cosecha: {{ harvest.description }}</h2>
+
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#add-product-modal">
+          Agregar Producto
+        </button>
+
+        <!-- MODAL -->
+        {% include "admin/analyst/add-product-modal.html" %}
+      </div>
+
+      <form id="product-list" action="" method="post">
+        <table class="table">
+          <!-- HEADER -->
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Cedula</th>
+              <th scope="col">Precio ($)</th>
+              <th scope="col">Clase de Cacao</th>
+              <th scope="col">Cantidad (kg)</th>
+              <th scope="col">Humedad (%)</th>
+              <th scope="col">Merma (%)</th>
+              <th scope="col">Merma (kg)</th>
+              <th scope="col">Cta. Total (kg)</th>
+              <th scope="col">Monto ($)</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Accion</th>
+            </tr>
+          </thead>
+  
+          <!-- BODY -->
+          <tbody>
+            {% for product in products %}
+              <tr key="{{ product.id }}">
+                <th scope="row" style="vertical-align: middle;">{{ product.id }}</th>
+                <td style="vertical-align: middle;">{{ product.date }}</td>
+                <td style="vertical-align: middle;">{{ product.id_type }} - {{ product.id_number }}</td>
+                <td style="vertical-align: middle;">{{ product.price }}</td>
+                <td style="vertical-align: middle;">{{ product.name }}</td>
+                <td style="vertical-align: middle;">{{ product.qty }}</td>
+                <td style="vertical-align: middle;">{{ product.humidity }}</td>
+                <td style="vertical-align: middle;">{{ product.depletion }}</td>
+                <td style="vertical-align: middle;"></td>
+                <td style="vertical-align: middle;">{{ product.total_qty }}</td>
+                <td style="vertical-align: middle;">{{ product.amount }}</td>
+                <td style="vertical-align: middle;">{{ product.description }}</td>
+                <td style="vertical-align: middle;">
+                  <button type="submit" class="btn btn-outline-danger" name="delete-product" value="{{ product.id }}">
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+{% endblock %}

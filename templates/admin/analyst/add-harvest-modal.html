@@ -1,0 +1,40 @@
+<div id="add-harvest-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Crear Cosecha</h5>
+        <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- FORM TO CREATE PRODUCER -->
+        <form id="createHarvest" action="" method="post">
+          <div>
+            <div class="form-group col my-2">
+              <p><strong>Información Básica</strong></p>
+            </div>
+            <div class="form-group col">
+              <label for="harvest-description-label">Descripción</label>
+              <input id="harvest-description-label" name="description" class="form-control" />
+            </div>
+            <div class="row my-2">
+              <div class="form-group col">
+                <label for="harvest-beginning-label">Comienzo</label>
+                <input id="harvest-beginning-label" type="date" name="beginning" class="form-control" />
+              </div>
+              <div class="form-group col">
+                <label for="harvest-closure-label">Cierre</label>
+                <input id="harvest-closure-label" type="date" name="closure" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="submit" form="createHarvest" id="create-harvest" name="action-type" value="create" class="btn btn-primary">Crear</button>
+      </div>
+    </div>
+  </div>
+</div>

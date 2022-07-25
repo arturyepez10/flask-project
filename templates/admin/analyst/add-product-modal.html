@@ -1,0 +1,95 @@
+<div id="add-product-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar producto a la orden de compra</h5>
+        <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- FORM TO CREATE PRODUCER -->
+        <form id="addProduct" action="" method="post">
+          <div>
+            <div class="form-group col my-2">
+              <p><strong>Información Básica</strong></p>
+            </div>
+            <div class="row my-2">
+              <div class="form-group col-2">
+                <label for="producer-id-type-label">Tipo</label>
+                <select id="producer-id-type-label" class="form-select" name="id_type">
+                  <option>V</option>
+                  <option>E</option>
+                  <option>J</option>
+                </select>
+              </div>
+              <div class="form-group col">
+                <label for="producer-id-number-label">Numero</label>
+                <input id="producer-id-number-label" name="id_number" class="form-control" />
+              </div>
+            </div>
+            <div class="row my-2">
+              <div class="form-group col">
+                <label for="product-date-label">Clase de Cacao</label>
+                <input id="product-date-label" name="name" class="form-control" />
+              </div>
+              <div class="form-group col">
+                <label for="product-date-label">Precio ($)</label>
+                <input id="product-date-label" type="number" name="price" class="form-control" />
+              </div>
+              <div class="form-group col">
+                <label for="product-qty-label">Cantidad</label>
+                <input id="product-qty-label" type="number" name="qty" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group col">
+              <label for="product-date-label">Fecha de compra</label>
+              <input id="product-date-label" type="date" name="date" class="form-control" />
+            </div>
+
+            <hr />
+
+            <div class="form-group col my-2">
+              <p><strong>Información Técnica</strong></p>
+            </div>
+
+            <div class="row my-2">
+              <div class="form-group col">
+                <label for="product-humidity-label">Humedad (%)</label>
+                <input id="product-humidity-label" type="number" name="humidity" class="form-control" />
+              </div>
+              <div class="form-group col">
+                <label for="product-depletion-label">Merma (%)</label>
+                <input id="product-depletion-label" type="number" name="depletion" class="form-control" />
+              </div>
+              <div class="form-group col">
+                <!-- TODO: is there a field for this ? -->
+                <label for="product-depletion-kg-label">Merma (kg)</label>
+                <input id="product-depletion-kg-label" type="number" name="humidity" class="form-control" disabled />
+              </div>
+            </div>
+            <div class="row my-2">
+              <div class="form-group col">
+                <label for="product-total-qty-label">Cantidad Total (kg)</label>
+                <input id="product-total-qty-label" type="number" name="total_qty" class="form-control" />
+              </div>
+              <div class="form-group col">
+                <label for="product-amount-label">Monto ($)</label>
+                <input id="product-amount-label" type="number" name="amount" class="form-control" />
+              </div>
+            </div>
+
+            <div class="form-group col">
+              <label for="product-amount-label">Observaciones</label>
+              <input id="product-amount-label" name="description" class="form-control" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="submit" form="addProduct" id="create-harvest" name="action-type" value="create" class="btn btn-primary">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>

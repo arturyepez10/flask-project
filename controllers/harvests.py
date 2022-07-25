@@ -236,8 +236,12 @@ def purchases(current_user = None):
   all_purchases = Purchase.query.all()
 
   if request.method == 'POST':
+<<<<<<< HEAD
     if 'view-details' in request.form:
       return redirect('/analyst' + routes["harvests"]["portfolio"] + '/' + request.form['view-details'] + '/purchase')
+=======
+    pass
+>>>>>>> feature/iteracion-3
 
   return render_template('purchases.html', purchases=all_purchases, error=error), 200
 
@@ -403,8 +407,13 @@ def add_product(idx):
     )
 
     # We add the product to the purchase
+<<<<<<< HEAD
     purchase.item_qty += int(data['qty'])
     purchase.total_price += float(data['price']) * int(data['qty'])
+=======
+    purchase.item_qty += data['qty']
+    purchase.total_price += data['price'] * data['qty']
+>>>>>>> feature/iteracion-3
     db.session.add(product)
 
     # We commit the changes to the database
