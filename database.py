@@ -38,8 +38,8 @@ def create_tables(testing = False):
         events = Events.__table__
         connection.execute(events.insert().values(
             date=datetime.today().strftime('%Y-%m-%d'),
-            description='User ' + target.username + ' created',
-            module="User",
+            description='Usuario \'' + target.username + '\' creado',
+            module="Usuario",
         ))
 
     @db.event.listens_for(User, 'after_update')
@@ -47,8 +47,8 @@ def create_tables(testing = False):
         events = Events.__table__
         connection.execute(events.insert().values(
             date=datetime.today().strftime('%Y-%m-%d'),
-            description='User ' + target.username + ' updated',
-            module="User",
+            description='Usuario \'' + target.username + '\' actualizado',
+            module="Usuarios",
         ))
 
     @db.event.listens_for(Producer, 'after_insert')
@@ -56,8 +56,8 @@ def create_tables(testing = False):
         events = Events.__table__
         connection.execute(events.insert().values(
             date=datetime.today().strftime('%Y-%m-%d'),
-            description='Producer ' + target.name + ' created',
-            module="Producer",
+            description='Recolector \'' + target.name + '\' creado',
+            module="Recolectores",
         ))
 
     @db.event.listens_for(Producer, 'after_update')
@@ -65,8 +65,8 @@ def create_tables(testing = False):
         events = Events.__table__
         connection.execute(events.insert().values(
             date=datetime.today().strftime('%Y-%m-%d'),
-            description='Producer ' + target.name + ' updated',
-            module="Producer",
+            description='Recolectores \'' + target.name + '\' actualizado',
+            module="Recolectores",
         ))
 
     @db.event.listens_for(ProducerType, 'after_insert')
@@ -74,8 +74,8 @@ def create_tables(testing = False):
         events = Events.__table__
         connection.execute(events.insert().values(
             date=datetime.today().strftime('%Y-%m-%d'),
-            description='Producer Type ' + target.name + ' created',
-            module="Producer Type",
+            description='Producer Type \'' + target.name + '\' creado',
+            module="Tipos de Recolectores",
         ))
 
     @db.event.listens_for(ProducerType, 'after_update')
@@ -83,8 +83,8 @@ def create_tables(testing = False):
         events = Events.__table__
         connection.execute(events.insert().values(
             date=datetime.today().strftime('%Y-%m-%d'),
-            description='Producer Type ' + target.name + ' updated',
-            module="Producer Type",
+            description='Recolector del tipo \'' + target.name + '\' actualizado',
+            module="Tipos de Recolectores",
         ))
 
     @db.event.listens_for(Harvest, 'after_insert')
@@ -92,8 +92,8 @@ def create_tables(testing = False):
         events = Events.__table__
         connection.execute(events.insert().values(
             date=datetime.today().strftime('%Y-%m-%d'),
-            description='Harvest ' + target.description + ' created',
-            module="Harvest",
+            description='Cosecha \'' + target.description + '\' creado',
+            module="Cosechas",
         ))
 
     @db.event.listens_for(Harvest, 'after_update')
@@ -101,8 +101,8 @@ def create_tables(testing = False):
         events = Events.__table__
         connection.execute(events.insert().values(
             date=datetime.today().strftime('%Y-%m-%d'),
-            description='Harvest ' + target.description + ' updated',
-            module="Harvest",
+            description='Cosecha \'' + target.description + '\' actualizado',
+            module="Cosechas",
         ))
 
     @db.event.listens_for(Purchase, 'after_insert')
@@ -110,8 +110,8 @@ def create_tables(testing = False):
         events = Events.__table__
         connection.execute(events.insert().values(
             date=datetime.today().strftime('%Y-%m-%d'),
-            description='Purchase created',
-            module="Purchase",
+            description='Compra creada',
+            module="Compras",
         ))
 
     @db.event.listens_for(Purchase, 'after_update')
@@ -119,8 +119,8 @@ def create_tables(testing = False):
         events = Events.__table__
         connection.execute(events.insert().values(
             date=datetime.today().strftime('%Y-%m-%d'),
-            description='Purchase updated',
-            module="Purchase",
+            description='Compra actualizado',
+            module="Compras",
         ))
 
     @db.event.listens_for(Product, 'after_insert')
@@ -128,8 +128,8 @@ def create_tables(testing = False):
         events = Events.__table__
         connection.execute(events.insert().values(
             date=datetime.today().strftime('%Y-%m-%d'),
-            description='Product created',
-            module="Product",
+            description='Producto creado',
+            module="Productos",
         ))
 
     @db.event.listens_for(Product, 'after_update')
@@ -137,8 +137,8 @@ def create_tables(testing = False):
         events = Events.__table__
         connection.execute(events.insert().values(
             date=datetime.today().strftime('%Y-%m-%d'),
-            description='Product updated',
-            module="Product",
+            description='Producto actualizado',
+            module="Productos",
         ))
 
 # ------------------------ MODELS ----------------------------- #

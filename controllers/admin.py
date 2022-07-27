@@ -19,8 +19,6 @@ admin_bp = Blueprint("admin", __name__)
 @login_required
 @admin_required
 def users(current_user = None):
-  print(Events.query.all())
-
   # Variables that the template will use to render
   error = None
 
@@ -95,6 +93,19 @@ def users(current_user = None):
       return redirect('/admin' + routes["admin"]["users"])
 
   return render_template('users.html', all_users=all_users, all_harvests=all_harvests, error=error, search_bar=search_bar)
+
+# logger
+@admin_bp.route(routes["admin"]["logger"], methods=['GET', 'POST'])
+@login_required
+@admin_required
+def logger(current_user = None):
+  # Variables that the template will use to render
+  error = None
+
+  # We obtain all available users to render them in the list
+  all_events = Events.query.all()
+
+  return render_template('logger.html', events=all_events, error=error)
 
 
 # ------------------------ CONTROLLERS ----------------------------- #
